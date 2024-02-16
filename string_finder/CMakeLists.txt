@@ -1,11 +1,11 @@
-cmake_minimum_required(VERSION 3.27)
+cmake_minimum_required(VERSION 3.26)
 project(string_finder)
 
 #set(Boost_ROOT "C:/MinGW")
 #set(Boost_INCLUDE_DIR "C:/MinGW/include")
 #set(Boost_LIBRARY_DIR "C:/MinGW/lib")
 
-find_package(Boost 1.84 COMPONENTS system filesystem REQUIRED)
+find_package(Boost 1.74 COMPONENTS system filesystem REQUIRED)
 
 if (NOT Boost_FOUND)
     message(FATAL_ERROR "Could not find Boost!")
@@ -17,7 +17,9 @@ message(STATUS "Boost_VERSION: ${Boost_VERSION}")
 
 include_directories(${Boost_INCLUDE_DIRS})
 
-add_executable(string_finder main.cpp utils/occurrence.cpp)
+add_executable(string_finder main.cpp src/occurrence.cpp
+        include/file.h
+        src/file.cpp)
 
 target_link_libraries(string_finder PRIVATE ${Boost_LIBRARIES})
 

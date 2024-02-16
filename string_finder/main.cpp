@@ -1,54 +1,42 @@
-#include <unordered_map>
 #include <vector>
 #include <iostream>
 
-#include <boost/filesystem.hpp>
-
-#include "utils/occurrence.h"
+#include "include/occurrence.h"
 
 
-namespace fs = boost::filesystem;
-
-void find_txt_files(const fs::path& root, std::vector<fs::path>& txt_files)
-{
-	if (!fs::exists(root) || !fs::is_directory(root)) return;   
-
-	fs::recursive_directory_iterator it(root), end;
-
-	while (it != end) {
-		if (fs::is_regular_file(*it) && it->path().extension() == ".txt") {
-			txt_files.push_back(it->path());
-		}
-		++it;
-	}
-}
+void handle_user_input(int argc, char* argv[]);
 
 int main(int argc, char* argv[])
 {
-	std::string to_find = "before";
-	//    std::string to_find;
-	//    to_find.reserve(128);
+    try {
+        handle_user_input(argc, argv);
 
-	std::string sentence = "afsdfafsdbeforeadsfsda";
+        std::string to_find(argv[2]);
+        fs::path root_path((std::string(argv[1])));
+        std::vector<fs::path> txt_files;
 
-	std::vector<fs::path> txt_files;
-	fs::path root_path = "../text/";
+        find_txt_files(root_path, txt_files);
 
-	find_txt_files(root_path, txt_files);
+        auto bad_match_table = create_bad_match_table(to_find);
 
-	for (const auto& txt_file : txt_files)
-		std::cout << txt_file.string();
+        std::vector<Occurrence> occurrences;
 
-	std::unordered_map<char, int>* bad_match_table = create_bad_match_table(to_find);
+        find_occurrences(&occurrences, &txt_files, bad_match_table.get(), to_find);
 
-	std::vector<Occurrence> occurrences;
+        for (const auto& occurrence : occurrences)
+            occurrence.print();
 
-	find_occurrences(&occurrences, bad_match_table, to_find, sentence);
 
-	for (const auto& occurrence : occurrences)
-		Occurrence::print(occurrence);
+        return 0;
+    } catch (const std::exception& e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+        return 1;
+    }
 
-	delete_bad_match_table(bad_match_table);
+}
 
-	return 0;
+void handle_user_input(int argc, char* argv[]) {
+    if (argc < 3) throw std::runtime_error("less than 3 arguments provided.");
+    if (argc > 3) throw std::runtime_error("more than 3 arguments provided.");
+    if (std::string(argv[2]).length() > 128) throw std::runtime_error("string to find is longer than 128 characters.");
 }
