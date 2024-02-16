@@ -17,9 +17,15 @@ message(STATUS "Boost_VERSION: ${Boost_VERSION}")
 
 include_directories(${Boost_INCLUDE_DIRS})
 
-add_executable(string_finder main.cpp src/occurrence.cpp
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -Wall")
+
+add_executable(string_finder main.cpp src/Occurrence.cpp
         include/file.h
-        src/file.cpp)
+        src/file.cpp
+        src/MappedMemory.cpp
+        include/MappedMemory.h
+        src/BadMatchTable.cpp
+        include/BadMatchTable.h)
 
 target_link_libraries(string_finder PRIVATE ${Boost_LIBRARIES})
 

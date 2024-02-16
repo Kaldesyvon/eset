@@ -1,3 +1,0 @@
-F:/Tvorba/string_finder/cmake-build-debug/CMakeFiles/string_finder.dir
-F:/Tvorba/string_finder/cmake-build-debug/CMakeFiles/edit_cache.dir
-F:/Tvorba/string_finder/cmake-build-debug/CMakeFiles/rebuild_cache.dir

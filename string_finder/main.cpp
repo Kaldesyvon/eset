@@ -1,27 +1,29 @@
 #include <vector>
 #include <iostream>
 
-#include "include/occurrence.h"
+#include "include/Occurrence.h"
 
 
-void handle_user_input(int argc, char* argv[]);
+void handleUserInput(int argc, char* argv[]);
 
 int main(int argc, char* argv[])
 {
     try {
-        handle_user_input(argc, argv);
+        handleUserInput(argc, argv);
 
-        std::string to_find(argv[2]);
-        fs::path root_path((std::string(argv[1])));
-        std::vector<fs::path> txt_files;
+        std::string toFind(argv[2]);
+        fs::path rootPath((std::string(argv[1])));
+        std::vector<fs::path> txtFiles;
 
-        find_txt_files(root_path, txt_files);
+        findTxtFiles(rootPath, txtFiles);
 
-        auto bad_match_table = create_bad_match_table(to_find);
+        BadMatchTable badMatchTable(toFind);
 
         std::vector<Occurrence> occurrences;
 
-        find_occurrences(&occurrences, &txt_files, bad_match_table.get(), to_find);
+        for (const auto& txtFile : txtFiles)
+            findOccurrences(&occurrences, txtFile, badMatchTable, toFind);
+
 
         for (const auto& occurrence : occurrences)
             occurrence.print();
@@ -35,7 +37,7 @@ int main(int argc, char* argv[])
 
 }
 
-void handle_user_input(int argc, char* argv[]) {
+void handleUserInput(int argc, char* argv[]) {
     if (argc < 3) throw std::runtime_error("less than 3 arguments provided.");
     if (argc > 3) throw std::runtime_error("more than 3 arguments provided.");
     if (std::string(argv[2]).length() > 128) throw std::runtime_error("string to find is longer than 128 characters.");

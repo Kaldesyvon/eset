@@ -15,8 +15,7 @@
 
 namespace fs = boost::filesystem;
 
-std::pair<char*, size_t> get_file_content(const char *path);
-void find_txt_files(const fs::path& root, std::vector<fs::path>& txt_files);
+void findTxtFiles(const fs::path& root, std::vector<fs::path>& txtFiles);
 
 
 #endif //STRING_FINDER_FILE_H
