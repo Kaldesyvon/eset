@@ -19,13 +19,15 @@ include_directories(${Boost_INCLUDE_DIRS})
 
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -Wall")
 
-add_executable(string_finder main.cpp src/Occurrence.cpp
-        include/file.h
-        src/file.cpp
-        src/MappedMemory.cpp
+add_executable(string_finder main.cpp
+        include/Occurrence.h
+        include/File.h
         include/MappedMemory.h
-        src/BadMatchTable.cpp
-        include/BadMatchTable.h)
+        include/BadMatchTable.h
+        src/Occurrence.cpp
+        src/File.cpp
+        src/MappedMemory.cpp
+        src/BadMatchTable.cpp)
 
 target_link_libraries(string_finder PRIVATE ${Boost_LIBRARIES})
 

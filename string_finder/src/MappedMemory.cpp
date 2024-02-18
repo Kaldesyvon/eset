@@ -7,6 +7,7 @@
 
 MappedFile::MappedFile(const char* path) {
     fileDescriptor = open(path, O_RDONLY);
+
     if (fileDescriptor == -1) {
         throw std::system_error(errno, std::generic_category(), "Failed to open file");
     }
@@ -16,6 +17,7 @@ MappedFile::MappedFile(const char* path) {
     }
 
     mapped = mmap(nullptr, fileInfo.st_size, PROT_READ, MAP_PRIVATE, fileDescriptor, 0);
+
     if (mapped == MAP_FAILED) {
         throw std::system_error(errno, std::generic_category(), "Failed to map file");
     }

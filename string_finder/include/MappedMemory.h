@@ -1,7 +1,3 @@
-//
-// Created by martin on 2/16/24.
-//
-
 #ifndef STRING_FINDER_MAPPEDMEMORY_H
 #define STRING_FINDER_MAPPEDMEMORY_H
 
