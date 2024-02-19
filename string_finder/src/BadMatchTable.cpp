@@ -1,6 +1,7 @@
+#include <algorithm>
+
 #include "../include/BadMatchTable.h"
 
-#include <algorithm>
 
 BadMatchTable::BadMatchTable(const std::string& needle) : table(std::make_unique<std::unordered_map<char, int>>()) {
     uint8_t needleLength = needle.length();
@@ -12,15 +13,15 @@ BadMatchTable::BadMatchTable(const std::string& needle) : table(std::make_unique
     table->insert({'*', needleLength});
 }
 
-size_t BadMatchTable::getShiftValue(char character) const {
-    auto found = table->find(character);
+size_t BadMatchTable::getShiftValue(const char character) const {
+    const auto found = table->find(character);
     if (found != table->end()) {
         return found->second;
     }
     return table->at('*');
 }
 
-void BadMatchTable::insertPair(uint8_t needleLength, uint8_t needleIndex, char characterToFind) {
+void BadMatchTable::insertPair(const uint8_t needleLength, const uint8_t needleIndex, const char characterToFind) {
     bool isLastChar = (needleIndex == needleLength - 1);
     auto occurrence = table->find(characterToFind);
 

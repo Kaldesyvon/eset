@@ -2,7 +2,6 @@
 #include <string>
 #include <utility>
 
-
 #include "../include/Occurrence.h"
 
 
@@ -16,7 +15,7 @@ Occurrence::Occurrence(size_t at_index, fs::path path)
 
 }
 
-std::string transformEscapeSeq(char escapeSeq)
+std::string transformEscapeSeq(const char escapeSeq)
 {
     if (escapeSeq == '\t') {
         return "\\t";
@@ -27,35 +26,29 @@ std::string transformEscapeSeq(char escapeSeq)
     return std::string(1, escapeSeq); // NOLINT(*-return-braced-init-list)
 }
 
-
-
-void Occurrence::setPrefix(const std::string& haystack, size_t haystackIndex, uint8_t needleLength)
+void Occurrence::setPrefix(const std::string& haystack, const size_t haystackIndex, const uint8_t needleLength)
 {
-    size_t needleStartIndex = haystackIndex- (needleLength - 1);
+    const size_t needleStartIndex = haystackIndex- (needleLength - 1);
 
-    uint8_t prefixLength = (uint8_t)std::min(static_cast<size_t>(3), needleStartIndex);
+    const uint8_t prefixLength = (uint8_t)std::min(static_cast<size_t>(3), needleStartIndex);
 
-    size_t prefixStart = needleStartIndex - prefixLength;
+    const size_t prefixStart = needleStartIndex - prefixLength;
 
     for (uint8_t prefixInc = 0; prefixInc < prefixLength; prefixInc++) {
-        char prefixChar = haystack[prefixStart + prefixInc];
+        const char prefixChar = haystack[prefixStart + prefixInc];
         prefix += transformEscapeSeq(prefixChar);
     }
-
 }
 
-void Occurrence::setSuffix(const std::string& haystack, size_t haystackIndex)
+void Occurrence::setSuffix(const std::string& haystack, const size_t haystackIndex)
 {
-    std::string suffixLocal;
+    const size_t haystackLength = haystack.length();
 
-    size_t haystackLength = haystack.length();
-
-    uint8_t suffixLength = (uint8_t)std::min(static_cast<size_t>(3), haystackLength - haystackIndex);
+    const uint8_t suffixLength = (uint8_t)std::min(static_cast<size_t>(3), haystackLength - haystackIndex);
 
     for (size_t suffixInc = haystackIndex + 1; suffixInc <= haystackIndex + suffixLength; suffixInc++) {
-        char suffixChar = haystack[suffixInc];
+        const char suffixChar = haystack[suffixInc];
 
         suffix += transformEscapeSeq(suffixChar);
     }
-
 }

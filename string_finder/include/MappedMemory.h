@@ -1,23 +1,23 @@
 #ifndef STRING_FINDER_MAPPEDMEMORY_H
 #define STRING_FINDER_MAPPEDMEMORY_H
 
-#include <iostream>
 #include <fcntl.h>
-#include <unistd.h>
+#include <iostream>
 #include <sys/stat.h>
 #include <sys/mman.h>
+#include <unistd.h>
+
 
 class MappedFile {
 public:
-    explicit MappedFile(const char* path);
-    ~MappedFile();
+    char* getData() const;
+    size_t getLength() const;
 
     MappedFile(const MappedFile&) = delete;
     MappedFile& operator=(const MappedFile&) = delete;
 
-    char* getData() const;
-    size_t getLength() const;
-
+    explicit MappedFile(const char* path);
+    ~MappedFile();
 private:
     int fileDescriptor = -1;
     struct stat fileInfo{};

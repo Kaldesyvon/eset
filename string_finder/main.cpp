@@ -12,12 +12,13 @@ int main(int argc, char* argv[])
     try {
         handleUserInput(argc, argv);
 
-        std::string toFind(argv[2]);
-        fs::path rootPath((std::string(argv[1])));
+        const std::string toFind(argv[2]);
+        const fs::path rootPath((std::string(argv[1])));
 
         auto txtFiles = findTxtFiles(rootPath);
 
-        BadMatchTable badMatchTable(toFind);
+        // TODO: use raii and make it shared/unique
+        const BadMatchTable badMatchTable(toFind);
 
         for (const auto& txtFile : txtFiles)
             txtFile->findOccurrences(badMatchTable, toFind);
@@ -34,9 +35,9 @@ int main(int argc, char* argv[])
 
 }
 
-void handleUserInput(int argc, char* argv[]) {
-    if (argc < 3) throw std::runtime_error("less than 3 arguments provided.");
-    if (argc > 3) throw std::runtime_error("more than 3 arguments provided.");
+void handleUserInput(const int argc, char* argv[]) {
+    if (argc < 3) throw std::runtime_error("less than 3 arguments provided. Usage: ./string_finder <path|file.txt> <string_to_find>");
+    if (argc > 3) throw std::runtime_error("more than 3 arguments provided. Usage: ./string_finder <path|file.txt> <string_to_find>");
     if (std::string(argv[2]).length() > 128) throw std::runtime_error("string to find is longer than 128 characters.");
 }
 
