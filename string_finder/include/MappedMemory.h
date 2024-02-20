@@ -7,18 +7,35 @@
 #include <sys/mman.h>
 #include <unistd.h>
 
-
+/*
+ * This class holds information about mapped file's contend as for we used mmap() to process large files relatively fast.
+ */
 class MappedFile {
 public:
+    /*
+     * Getter for file's content aka haystack.
+     */
     char* getData() const;
+    /*
+     * Getter for file's content length.
+     */
     size_t getLength() const;
 
+    /*
+     * This two lines secures that MappedFile pointer cannot be copied.
+     */
     MappedFile(const MappedFile&) = delete;
     MappedFile& operator=(const MappedFile&) = delete;
 
+    /*
+     * Constructor for MappedFile.
+     */
     explicit MappedFile(const char* path);
     ~MappedFile();
 private:
+    /*
+     * Member variables for storing data.
+     */
     int fileDescriptor = -1;
     struct stat fileInfo{};
     void* mapped = MAP_FAILED;

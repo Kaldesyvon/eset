@@ -6,11 +6,11 @@
 
 
 void Occurrence::print() const {
-    std::cout << path.string() << "(" << at_index << "):" << prefix << "..." << suffix << "\n";
+    std::cout << "(" << at_index << "):" << prefix << "..." << suffix << "\n";
 }
 
-Occurrence::Occurrence(size_t at_index, fs::path path)
-        : at_index(at_index), path(std::move(path))
+Occurrence::Occurrence(size_t at_index)
+        : at_index(at_index)
 {
 
 }
