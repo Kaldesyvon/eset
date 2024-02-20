@@ -7,8 +7,6 @@
 
 #include <boost/filesystem.hpp>
 
-#include "BadMatchTable.h"
-
 
 namespace fs = boost::filesystem;
 

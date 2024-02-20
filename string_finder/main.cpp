@@ -3,6 +3,8 @@
 
 #include "include/File.h"
 
+#define FILE_EXTENSION ".txt"
+
 
 void handleUserInput(int argc, char* argv[]);
 std::vector<std::unique_ptr<File>> findTxtFiles(const fs::path& root);
@@ -47,7 +49,7 @@ std::vector<std::unique_ptr<File>> findTxtFiles(const fs::path& root)
     if (!fs::exists(root))
         throw std::runtime_error(root.string() + " does not exists.");
 
-    if (!fs::is_directory(root) && fs::extension(root) != ".txt")
+    if (!fs::is_directory(root) && fs::extension(root) != FILE_EXTENSION)
         throw std::runtime_error(root.string() + " is neither .txt file nor directory.");
 
     std::vector<std::unique_ptr<File>> txtFiles;

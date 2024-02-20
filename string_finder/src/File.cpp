@@ -2,11 +2,12 @@
 #include "../include/MappedMemory.h"
 
 
+
 File::File(const fs::path& path) {
     this->path = path;
 }
 
-File::~File()= default;
+File::~File() = default;
 
 void File::findOccurrences(const BadMatchTable &badMatchTable, const std::string &needle) {
     // tu bude files vector a z neho si tato funckia bude brat fily.
