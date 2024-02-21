@@ -15,6 +15,7 @@ BadMatchTable::BadMatchTable(const std::string& needle) : table(std::make_unique
     }
     table->insert({'*', needleLength});
 }
+
 /*
  * Based on created bad match table method returns shift value for corresponding character in bad match table.
  * If character is not in bad match table then shift value with '*' is returned.
@@ -28,7 +29,7 @@ size_t BadMatchTable::getShiftValue(const char character) const {
 }
 
 /*
- * Inserts a pair of a character and its value calculated from max(1, needle_length + index_of_character_in_needle - 1.
+ * Inserts a pair of a character and its value calculated from max(1, needle_length + index_of_character_in_needle - 1).
  * When character already exists in bad match table the value is updated.
  */
 void BadMatchTable::insertPair(const uint8_t needleLength, const uint8_t needleIndex, const char characterToFind) {

@@ -13,6 +13,8 @@
 #include "BadMatchTable.h"
 #include "Occurrence.h"
 
+#define FILE_EXTENSION ".txt"
+
 
 namespace fs = boost::filesystem;
 
@@ -22,13 +24,15 @@ namespace fs = boost::filesystem;
 class File {
 public:
     /*
-     * Method that search file's content and find occurrence of needles in haystack and saves them into private vector.
+     * Method that search file's haystack and find occurrence of needles in haystack and saves them into private vector.
      */
     void findOccurrences(const std::shared_ptr<BadMatchTable> &badMatchTable, const std::string& needle);
     /*
      * Prints all occurrences in file.
      */
     void printOccurrences() const;
+
+    static std::vector<std::unique_ptr<File>> findTxtFiles(const fs::path& root);
 
     /*
      * Constructor for File class. It takes file's path as an argument.

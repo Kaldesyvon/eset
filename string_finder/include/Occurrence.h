@@ -30,11 +30,10 @@ public:
 
     /*
      * Constructor for occurrence that takes position of occurrence and path of file.
-     * TODO: maybe we dont need path to store it in occurrence
      */
-    explicit Occurrence(size_t at_index);
+    explicit Occurrence(size_t position);
 private:
-    const size_t at_index;
+    const size_t atIndex;
     std::string prefix;
     std::string suffix;
 };

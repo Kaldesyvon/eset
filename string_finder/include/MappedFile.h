@@ -1,5 +1,5 @@
-#ifndef STRING_FINDER_MAPPEDMEMORY_H
-#define STRING_FINDER_MAPPEDMEMORY_H
+#ifndef STRING_FINDER_MAPPEDFILE_H
+#define STRING_FINDER_MAPPEDFILE_H
 
 #include <fcntl.h>
 #include <iostream>
@@ -13,11 +13,11 @@
 class MappedFile {
 public:
     /*
-     * Getter for file's content aka haystack.
+     * Getter for file's haystack aka haystack.
      */
     char* getData() const;
     /*
-     * Getter for file's content length.
+     * Getter for file's haystack length.
      */
     size_t getLength() const;
 
@@ -43,4 +43,4 @@ private:
 };
 
 
-#endif //STRING_FINDER_MAPPEDMEMORY_H
+#endif //STRING_FINDER_MAPPEDFILE_H
