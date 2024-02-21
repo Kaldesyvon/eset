@@ -83,7 +83,6 @@ void File::printOccurrences() const {
  */
 std::vector<std::unique_ptr<File>> File::findTxtFiles(const fs::path& root)
 {
-    // TODO: maybe try to check right for dirs
     if (!fs::exists(root))
         throw std::runtime_error(root.string() + " does not exists.");
 
