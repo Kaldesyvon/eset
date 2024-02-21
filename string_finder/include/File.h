@@ -32,6 +32,10 @@ public:
      */
     void printOccurrences() const;
 
+    /*
+     * Functions takes user's argument and finds all .txt files if any
+     * Argument which function asks is user's input path to dir/.txt file
+     */
     static std::vector<std::unique_ptr<File>> findTxtFiles(const fs::path& root);
 
     /*

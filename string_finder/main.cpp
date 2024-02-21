@@ -6,25 +6,19 @@
 #include "include/File.h"
 
 #define FILE_EXTENSION ".txt"
+#define MULTITHREAD
 
 /*
  * Function handles if user uses program incorrectly
  */
 void handleUserInput(int argc, char* argv[]);
-/*
- * Functions takes user's argument and finds all .txt files if any
- *
- * Argument which function asks is user's input path to dir/.txt file
- */
-std::vector<std::unique_ptr<File>> findTxtFiles(const fs::path& root);
+
 /*
  * This function acts as a wrapper for usage of multithreading
  */
 void searchInFile(std::unique_ptr<File>& file, const std::shared_ptr<BadMatchTable>& badMatchTable, const std::string& needle);
 
-/*
- *
- */
+
 int main(int argc, char* argv[])
 {
     try {
@@ -39,6 +33,8 @@ int main(int argc, char* argv[])
 
         const auto badMatchTable = std::make_shared<BadMatchTable>(needle);
 
+
+#ifdef MULTITHREAD
         std::vector<std::thread> threads;
 
         for (auto& file : txtFiles)
@@ -49,6 +45,12 @@ int main(int argc, char* argv[])
                 thread.join();
             }
         }
+#else
+        for (const auto& file : txtFiles) {
+            file->findOccurrences(badMatchTable, needle);
+        }
+#endif
+
 
         const std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 
