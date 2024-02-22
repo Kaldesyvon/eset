@@ -25,13 +25,15 @@ public:
     /*
      * Setters for prefix and suffix. It hides implementation of more complex logic.
      */
-    void setPrefix(const std::string& haystack, size_t haystackIndex, uint8_t needleLength);
-    void setSuffix(const std::string& haystack, size_t haystackIndex);
+    void setPrefix(const std::string &haystack, size_t haystackIndex, uint8_t needleLength);
+
+    void setSuffix(const std::string &haystack, size_t haystackIndex);
 
     /*
      * Constructor for occurrence that takes position of occurrence and path of file.
      */
     explicit Occurrence(size_t position);
+
 private:
     const size_t atIndex;
     std::string prefix;

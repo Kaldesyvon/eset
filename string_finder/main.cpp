@@ -11,16 +11,16 @@
 /*
  * Function handles if user uses program incorrectly
  */
-void handleUserInput(int argc, char* argv[]);
+void handleUserInput(int argc, char *argv[]);
 
 /*
  * This function acts as a wrapper for usage of multithreading
  */
-void searchInFile(std::unique_ptr<File>& file, const std::shared_ptr<BadMatchTable>& badMatchTable, const std::string& needle);
+void searchInFile(std::unique_ptr<File> &file, const std::shared_ptr<BadMatchTable> &badMatchTable,
+                  const std::string &needle);
 
 
-int main(int argc, char* argv[])
-{
+int main(int argc, char *argv[]) {
     try {
         handleUserInput(argc, argv);
 
@@ -37,10 +37,10 @@ int main(int argc, char* argv[])
 #ifdef MULTITHREAD
         std::vector<std::thread> threads;
 
-        for (auto& file : txtFiles)
+        for (auto &file: txtFiles)
             threads.emplace_back(searchInFile, std::ref(file), std::ref(badMatchTable), needle);
 
-        for (auto& thread : threads) {
+        for (auto &thread: threads) {
             if (thread.joinable()) {
                 thread.join();
             }
@@ -51,17 +51,17 @@ int main(int argc, char* argv[])
         }
 #endif
 
-
         const std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 
-        std::cout << "Program finding duration: = " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[µs]" << std::endl;
+        std::cout << "Program finding duration: = "
+                  << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[µs]" << std::endl;
 
-        for (const auto& txtFile : txtFiles)
+        for (const auto &txtFile: txtFiles)
             txtFile->printOccurrences();
 
 
         return 0;
-    } catch (const std::exception& e) {
+    } catch (const std::exception &e) {
         std::cerr << "Error: " << e.what() << std::endl;
         return 1;
     }
@@ -70,12 +70,17 @@ int main(int argc, char* argv[])
 /*
  * Handles user input arguments
  */
-void handleUserInput(const int argc, char* argv[]) {
-    if (argc < 3) throw std::runtime_error("less than 3 arguments provided. Usage: ./string_finder <path|file.txt> <string_to_find>");
-    if (argc > 3) throw std::runtime_error("more than 3 arguments provided. Usage: ./string_finder <path|file.txt> <string_to_find>");
+void handleUserInput(const int argc, char *argv[]) {
+    if (argc < 3)
+        throw std::runtime_error(
+                "less than 3 arguments provided. Usage: ./string_finder <path|file.txt> <string_to_find>");
+    if (argc > 3)
+        throw std::runtime_error(
+                "more than 3 arguments provided. Usage: ./string_finder <path|file.txt> <string_to_find>");
     if (std::string(argv[2]).length() > 128) throw std::runtime_error("string to find is longer than 128 characters.");
 }
 
-void searchInFile(std::unique_ptr<File>& file, const std::shared_ptr<BadMatchTable>& badMatchTable, const std::string& needle) {
+void searchInFile(std::unique_ptr<File> &file, const std::shared_ptr<BadMatchTable> &badMatchTable,
+                  const std::string &needle) {
     file->findOccurrences(badMatchTable, needle);
 }

@@ -8,7 +8,7 @@
  * With this approach there is no need for creating mutexes to write into occurrence vector; every File fills its own
  * vector with no race condition.
  */
-File::File(const fs::path& path) {
+File::File(const fs::path &path) {
     this->path = path;
 }
 
@@ -25,6 +25,8 @@ File::~File() = default;
  * When all characters in needle are matching method call it occurrence.
  * Occurrence object would be created and added to vector of occurrences.
  * This repeats until end of file.
+ *
+ * More on: https://en.wikipedia.org/wiki/Boyer%E2%80%93Moore_string-search_algorithm
  */
 void File::findOccurrences(const std::shared_ptr<BadMatchTable> &badMatchTable, const std::string &needle) {
     const auto mappedMemory = std::make_unique<MappedFile>(path.c_str());
@@ -48,8 +50,7 @@ void File::findOccurrences(const std::shared_ptr<BadMatchTable> &badMatchTable, 
         if (needleIndex < 0) {
             createOccurrence(haystack, haystackIndex, needleLength);
             haystackIndex += needleLength;
-        }
-        else {
+        } else {
             const uint8_t shift = badMatchTable->getShiftValue(haystack[haystackIndex]);
             haystackIndex += shift;
         }
@@ -71,7 +72,7 @@ void File::createOccurrence(const char *haystack, const size_t haystackIndex, co
  * Prints occurrences in file.
  */
 void File::printOccurrences() const {
-    for (const auto& occurrence : occurrences){
+    for (const auto &occurrence: occurrences) {
         std::cout << path.string();
         occurrence->print();
     }
@@ -81,8 +82,7 @@ void File::printOccurrences() const {
  * Find all .txt in input directory, checks if it exists and return vector of files.
  * If input is .txt file it returns vector with one file.
  */
-std::vector<std::unique_ptr<File>> File::findTxtFiles(const fs::path& root)
-{
+std::vector<std::unique_ptr<File>> File::findTxtFiles(const fs::path &root) {
     if (!fs::exists(root))
         throw std::runtime_error(root.string() + " does not exists.");
 
@@ -91,7 +91,7 @@ std::vector<std::unique_ptr<File>> File::findTxtFiles(const fs::path& root)
 
     std::vector<std::unique_ptr<File>> txtFiles;
 
-    if(fs::extension(root) == ".txt") {
+    if (fs::extension(root) == ".txt") {
         txtFiles.push_back(std::make_unique<File>(root));
         return txtFiles;
     }

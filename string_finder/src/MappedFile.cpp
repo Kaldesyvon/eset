@@ -5,7 +5,7 @@
  * Constructor does error checking and utilizes mmap() function.
  * std::ifstream cannot be used with mmap so classic open() is used.
  */
-MappedFile::MappedFile(const char* path) {
+MappedFile::MappedFile(const char *path) {
     fileDescriptor = open(path, O_RDONLY);
 
     if (fileDescriptor == -1) {
@@ -39,8 +39,8 @@ MappedFile::~MappedFile() {
 /*
  * Getter for file's haystack.
  */
-char* MappedFile::getData() const {
-    return static_cast<char*>(mapped);
+char *MappedFile::getData() const {
+    return static_cast<char *>(mapped);
 }
 
 /*

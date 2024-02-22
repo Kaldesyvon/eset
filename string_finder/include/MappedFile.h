@@ -15,7 +15,8 @@ public:
     /*
      * Getter for file's haystack aka haystack.
      */
-    char* getData() const;
+    char *getData() const;
+
     /*
      * Getter for file's haystack length.
      */
@@ -24,21 +25,24 @@ public:
     /*
      * This two lines secures that MappedFile pointer cannot be copied.
      */
-    MappedFile(const MappedFile&) = delete;
-    MappedFile& operator=(const MappedFile&) = delete;
+    MappedFile(const MappedFile &) = delete;
+
+    MappedFile &operator=(const MappedFile &) = delete;
 
     /*
      * Constructor for MappedFile.
      */
-    explicit MappedFile(const char* path);
+    explicit MappedFile(const char *path);
+
     ~MappedFile();
+
 private:
     /*
      * Member variables for storing data.
      */
     int fileDescriptor = -1;
     struct stat fileInfo{};
-    void* mapped = MAP_FAILED;
+    void *mapped = MAP_FAILED;
     size_t fileLength = 0;
 };
 

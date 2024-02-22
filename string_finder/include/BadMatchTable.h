@@ -20,7 +20,8 @@ public:
     /*
      * Constructor of bad match table. It takes string to find as an argument
      */
-    explicit BadMatchTable(const std::string& needle);
+    explicit BadMatchTable(const std::string &needle);
+
 private:
     std::unique_ptr<std::unordered_map<char, int>> table;
 

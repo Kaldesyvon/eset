@@ -6,7 +6,7 @@
 /*
  * Creates bad match table and as for last character adds pair * and length of needle. More details on insertPair() function
  */
-BadMatchTable::BadMatchTable(const std::string& needle) : table(std::make_unique<std::unordered_map<char, int>>()) {
+BadMatchTable::BadMatchTable(const std::string &needle) : table(std::make_unique<std::unordered_map<char, int>>()) {
     uint8_t needleLength = needle.length();
 
     for (uint8_t needleIndex = 0; needleIndex < needleLength; needleIndex++) {
@@ -37,7 +37,8 @@ void BadMatchTable::insertPair(const uint8_t needleLength, const uint8_t needleI
     auto occurrence = table->find(characterToFind);
 
     if (!isLastChar || (occurrence == table->end())) {
-        int shiftValue = isLastChar ? static_cast<int>(needleLength) : std::max(1, static_cast<int>(needleLength - needleIndex - 1));
+        int shiftValue = isLastChar ? static_cast<int>(needleLength) : std::max(1, static_cast<int>(needleLength -
+                                                                                                    needleIndex - 1));
         (*table)[characterToFind] = shiftValue;
     }
 }

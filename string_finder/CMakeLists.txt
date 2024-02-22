@@ -17,7 +17,7 @@ message(STATUS "Boost_VERSION: ${Boost_VERSION}")
 
 include_directories(${Boost_INCLUDE_DIRS})
 
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -Wall")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -Wall")
 
 add_executable(string_finder main.cpp
         include/Occurrence.h

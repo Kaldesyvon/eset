@@ -26,7 +26,8 @@ public:
     /*
      * Method that search file's haystack and find occurrence of needles in haystack and saves them into private vector.
      */
-    void findOccurrences(const std::shared_ptr<BadMatchTable> &badMatchTable, const std::string& needle);
+    void findOccurrences(const std::shared_ptr<BadMatchTable> &badMatchTable, const std::string &needle);
+
     /*
      * Prints all occurrences in file.
      */
@@ -36,13 +37,15 @@ public:
      * Functions takes user's argument and finds all .txt files if any
      * Argument which function asks is user's input path to dir/.txt file
      */
-    static std::vector<std::unique_ptr<File>> findTxtFiles(const fs::path& root);
+    static std::vector<std::unique_ptr<File>> findTxtFiles(const fs::path &root);
 
     /*
      * Constructor for File class. It takes file's path as an argument.
      */
-    explicit File(const fs::path& path);
+    explicit File(const fs::path &path);
+
     ~File();
+
 private:
     fs::path path;
     std::vector<std::unique_ptr<Occurrence>> occurrences;
